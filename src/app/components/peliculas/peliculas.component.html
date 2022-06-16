@@ -1,3 +1,58 @@
-<p>peliculas works!</p>
-<h1> {{titulo}}</h1>
-<button (click) = "cambiarTitulo()"> pulsamexd</button>
+<app-slider 
+[nombre]="'Peliculas'"
+[size] = "'small'"
+></app-slider>
+
+<div class="center">
+    <section id="content">
+
+        <p>peliculas works!</p>
+        <h1> {{titulo}}</h1>
+        <button (click)="cambiarTitulo()"> pulsamexd</button>
+
+        <hr />
+
+        <h2>Mostrar primera pelicula</h2>
+        {{peliculas[0].title}}
+        <hr>
+
+        <h2>Numero de peliculas</h2>
+        <div *ngIf="peliculas.length <= 3">
+            Hay pocas peliculas:
+
+        </div>
+
+        <div *ngIf="peliculas.length > 3">
+            Hay muchas peliculas
+        </div>
+        {{peliculas.length}}
+
+        <hr>
+
+        <article *ngIf="peliculas">
+
+            <div *ngFor="let pelicula of peliculas; let i = index;">
+
+
+
+                <p>Titulo de pelicula: {{i}} {{pelicula.title}}</p>
+                <hr>
+                <p>Imagen de pelicula : </p>
+                <div class="image-wrap">
+                    <img src="{{pelicula.image}}" alt="{{pelicula.title}}">
+                </div>
+
+                <span class="year" [ngClass]="{
+                                'year-green':pelicula.year > 2020 ,
+                                'year-red' :pelicula.year <= 2020
+                           }">
+                    {{pelicula.year}}
+
+                </span>
+
+            </div>
+
+        </article>
+    </section>
+    <app-sidebar></app-sidebar>
+</div>
