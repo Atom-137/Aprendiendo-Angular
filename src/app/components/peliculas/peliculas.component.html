@@ -1,12 +1,9 @@
-<app-slider 
-[nombre]="'Peliculas'"
-[size] = "'small'"
-></app-slider>
+<app-slider [nombre]="'Peliculas'" [size]="'small'"></app-slider>
 
 <div class="center">
-    <section id="content">
 
-        <p>peliculas works!</p>
+    <section id="content">
+        <!--
         <h1> {{titulo}}</h1>
         <button (click)="cambiarTitulo()"> pulsamexd</button>
 
@@ -26,33 +23,40 @@
             Hay muchas peliculas
         </div>
         {{peliculas.length}}
+    -->
 
+    <div id="favorita" *ngIf="favorita">
+
+        <script>
+            console.log("LLego a favorita en vista");
+        </script>
+        <h2 class="subheader">
+            Pelicula favorita
+        </h2>
+        <h4>
+            {{favorita.title | uppercase}}
+        </h4>
+        <h5>
+            {{favorita.year | espar}}
+        </h5>
+        <h5>
+            {{this.fecha | date: 'short'}}
+        </h5>
+  
+    
+    </div>
         <hr>
 
-        <article *ngIf="peliculas">
+        <div *ngFor="let pelicula of peliculas; let i = index;">
 
-            <div *ngFor="let pelicula of peliculas; let i = index;">
+            <article *ngIf="peliculas">
+                <app-pelicula 
+                [pelicula]="pelicula"
+                (MarcarFavorita) = "mostrarFavorita($event)"               
+                ></app-pelicula>
+            </article>
+        </div>
 
-
-
-                <p>Titulo de pelicula: {{i}} {{pelicula.title}}</p>
-                <hr>
-                <p>Imagen de pelicula : </p>
-                <div class="image-wrap">
-                    <img src="{{pelicula.image}}" alt="{{pelicula.title}}">
-                </div>
-
-                <span class="year" [ngClass]="{
-                                'year-green':pelicula.year > 2020 ,
-                                'year-red' :pelicula.year <= 2020
-                           }">
-                    {{pelicula.year}}
-
-                </span>
-
-            </div>
-
-        </article>
     </section>
     <app-sidebar></app-sidebar>
 </div>

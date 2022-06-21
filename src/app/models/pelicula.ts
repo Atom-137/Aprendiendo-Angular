@@ -1,4 +1,4 @@
-export class pelicula{
+export class pelicula {
 
     /*
     public title : string;
@@ -17,7 +17,8 @@ export class pelicula{
         public year: number,
         public image: string
 
-    ){}
+    ) { }
+
 
 };
 

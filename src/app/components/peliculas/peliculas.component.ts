@@ -1,35 +1,39 @@
 import { Component, OnInit, DoCheck, OnDestroy } from '@angular/core';
 import { pelicula } from 'src/app/models/pelicula';
+import { PeliculaService } from 'src/app/services/pelicula.service';
+
 
 
 @Component({
   selector: 'peliculas',
   templateUrl: './peliculas.component.html',
-  styleUrls: ['./peliculas.component.css']
+  styleUrls: ['./peliculas.component.css'],
+  providers: [PeliculaService]
 })
 export class PeliculasComponent implements OnInit,DoCheck, OnDestroy {
   
   
   public titulo:string;
   public peliculas : pelicula[];
-  
-  constructor() {
+  public favorita !: pelicula;
+  public fecha : any;
+
+  constructor(
+    private _peliculaService: PeliculaService
+  ) {
   
     this.titulo = "Esto es un titulo";
     console.log("Constructor lanzado");
-    this.peliculas =[
+    this.peliculas = this._peliculaService.getPeliculas();
 
-      new pelicula("Spiderman 4", 2019, "https://i0.wp.com/hipertextual.com/wp-content/uploads/2020/10/hipertextual-tobey-maguire-y-andrew-garfield-aparecerian-spider-man-3-y-universo-cinematografico-marvel-2020175510.jpg?fit=1200%2C604&quality=50&strip=all&ssl=1"),
-      new pelicula("Los vengadores", 2020, "https://lumiere-a.akamaihd.net/v1/images/eu_disneyplus_avengers-endgame_mob_m_928f44f1.jpeg?region=100,0,600,600"),
-      new pelicula("Los simpson", 2022, "https://sire-media-foxes.fichub.com/generic/serie-main/473.1024x576.jpg"),
-      
-    ];
+    this.fecha = new Date(2020,8,11);
     
   }
   
   ngOnInit(): void {
     console.log(this.peliculas);
     console.log("onInit lanzado");
+    console.log(this._peliculaService.holaMundo);
   }
   
   ngDoCheck(): void {
@@ -44,5 +48,10 @@ export class PeliculasComponent implements OnInit,DoCheck, OnDestroy {
   ngOnDestroy(){
     
     console.log("El componente se va a eliminar");
+  }
+
+  mostrarFavorita(event: any){
+
+    this.favorita = event.pelicula;
   }
 }
