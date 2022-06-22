@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ArticleService } from 'src/app/services/article.service';
+import { article } from 'src/app/models/article';
+import { Global } from 'src/app/services/global';
 
 
 @Component({
@@ -10,15 +12,23 @@ import { ArticleService } from 'src/app/services/article.service';
 })
 export class BlogComponent implements OnInit {
 
+  public articles !: article[];
+  public url : string;
+
   constructor(
     private _articleService : ArticleService
 
-  ) { }
+  ) {
+    this.url = Global.url;
+   }
 
   ngOnInit(): void {
     this._articleService.getArticles().subscribe(
       response => {
-        console.log(response);
+
+        if(response.articles){
+          this.articles = response.articles;
+        }
 
       },
       error => {
@@ -26,7 +36,5 @@ export class BlogComponent implements OnInit {
       }
     );
   }
-
-
 
 }

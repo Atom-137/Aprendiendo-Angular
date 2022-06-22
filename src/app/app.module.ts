@@ -18,6 +18,8 @@ import { ErrorComponent } from './components/error/error.component';
 import { PeliculaComponent } from './components/pelicula/pelicula.component';
 import { EsParPipe } from './pipes/espar.pipe';
 import { FormsModule } from '@angular/forms';
+import { ArticlesComponent } from './components/articles/articles.component';
+import { MomentModule } from 'angular2-moment';
 
 
 
@@ -36,14 +38,16 @@ import { FormsModule } from '@angular/forms';
     PaginaComponent,
     ErrorComponent,
     PeliculaComponent,
-    EsParPipe
+    EsParPipe,
+    ArticlesComponent
 
   ],
   imports: [
     BrowserModule,
     routing,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MomentModule
   ],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]
