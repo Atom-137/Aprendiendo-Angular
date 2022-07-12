@@ -1,27 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { article } from 'src/app/models/article';
 import { ArticleService } from 'src/app/services/article.service';
-import swal from 'sweetalert'; 
 import { Router, ActivatedRoute, Params, Event } from '@angular/router';
 import { Global } from 'src/app/services/global';
 import { HttpResponse } from '@angular/common/http';
-
-
-
+import swal from 'sweetalert'; 
 
 @Component({
-  selector: 'app-article-new',
-  templateUrl: './article-new.component.html',
-  styleUrls: ['./article-new.component.css'],
+  selector: 'app-article-edit',
+  templateUrl: '../article-new/article-new.component.html',
+  styleUrls: ['./article-edit.component.css'],
   providers: [ArticleService]
 })
-export class ArticleNewComponent implements OnInit {
+export class ArticleEditComponent implements OnInit {
 
   public article !: article;
   public status !: string;
+  public is_edit !: boolean;
   public page_title !: string;
   public url !: string;
-  public is_edit !: boolean;
+
 
   afuConfig = {
     multiple: false,
@@ -52,37 +50,44 @@ export class ArticleNewComponent implements OnInit {
     private _router: Router,
   ) {
     this.article = new article('', '', '', '', null);
-    this.page_title = 'Crear articulo';
+    this.is_edit = true;
+    this.page_title = 'Editar articulo';
     this.url = Global.url;
-    this.is_edit = false;
+
   }
 
   ngOnInit(): void {
+    this.getArtcicle();
   }
 
   onSubmit() {
 
 
 
-    this._articleService.create(this.article).subscribe(
+    this._articleService.update(this.article._id,this.article).subscribe(
       response => {
 
-        // console.log("Se llego a response");
+       // console.log("Se llego a response");
         this.status = 'success';
         //console.log(response.status);
         if (response.status == 'success') {
 
           //alerta
           swal(
-            'Articulo creado!',
-            'El articulo se ha creado correctament',
+            'Articulo editado!',
+            'El articulo se ha editado correctament',
             'success'
           );
 
           this.article = response.article;
-          this._router.navigate(['/blog']);
+          this._router.navigate(['/blog/articulo', this.article._id]);
 
         } else {
+          swal(
+            'Error',
+            'Edicion fallida, el articulo no se ha editado',
+            'error'
+          );
           this.status = 'error';
         }
 
@@ -102,4 +107,26 @@ export class ArticleNewComponent implements OnInit {
     this.article.image = data.body.image;
 
   }
+
+  getArtcicle(){
+    this._route.params.subscribe(params => {
+      let id = params['id'];
+
+      this._articleService.getArticle(id).subscribe(
+        response => {
+          if (response.article) {
+            this.article = response.article;
+          } else {
+            this._router.navigate(['/home']);
+          }
+        },
+        error => {
+          this._router.navigate(['/home']);
+          console.log(error);
+        }
+
+      );
+    });
+  }
+
 }

@@ -13,7 +13,7 @@ import { ErrorComponent } from "./components/error/error.component";
 import { ArticleComponent } from "./components/article/article.component";
 import { SearchComponent } from "./components/search/search.component";
 import { ArticleNewComponent } from "./components/article-new/article-new.component";
-
+import { ArticleEditComponent } from "./components/article-edit/article-edit.component";
 
 
 //array de rutas
@@ -28,6 +28,7 @@ const appRoutes: Routes = [
     { path: 'peliculas', component: PeliculasComponent},
     { path: 'blog/articulo/:id', component: ArticleComponent},
     { path: 'blog/crear', component: ArticleNewComponent},
+    { path: 'blog/editar/:id', component: ArticleEditComponent},
     //hacer parametro opcional
     { path: 'pagina-de-pruebas', component: PaginaComponent},
     { path: 'pagina-de-pruebas/:nombre/:apellido', component: PaginaComponent},

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable, observable } from "rxjs";
+import { Observable, observable, ObservedValueOf } from "rxjs";
 import { article } from "../models/article";
 import { Global } from "./global";
 
@@ -52,4 +52,16 @@ export class ArticleService {
 
     }
 
+    update(id:any, article:article): Observable<any>{
+
+        let params = JSON.stringify(article);
+        let headers = new HttpHeaders().set('Content-Type', 'application/json');
+        return this._http.put(this.url +'article/'+id,params,{headers:headers});
+
+    }
+
+    delete(id:any): Observable<any>{
+        let headers = new HttpHeaders().set('Content-Type', 'application/json');
+        return this._http.delete(this.url+'article/'+id, {headers:headers})
+    }
 }
